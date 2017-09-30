@@ -1,0 +1,23 @@
+<div class="row">
+	<div class="col-md-12">
+		<table class="table">
+      <thead>
+        <th>#</th>
+        <th>Team</th>
+        <th>Games</th>
+        <th>Points</th>
+        <th>GD</th>        
+      </thead>
+      <tbody>
+        <tr ngFor="let pos as rankings">
+          <td>{{pos?.rank}}</td>
+          <td>{{pos?.team.name}}</td>
+          <td>{{pos?.games}}</td>
+          <td>{{pos?.points}}</td>
+          <td>{{pos?.goalDifference}}</td>
+        </tr>
+      </tbody>
+    </table>
+		
+	</div>
+</div>

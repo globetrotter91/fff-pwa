@@ -1,0 +1,9 @@
+<div class="row">
+  <div class="col-md-12">
+      <div class="form-group">
+          <select class="form-control" [(ngModel)]="selectedLeague" (ngModelChange)="leagueSelectionChanged()">
+            <option *ngFor="let league of selectedLeagues" [ngValue]="league">{{league}}</option>
+          </select>
+        </div>
+  </div>
+</div>
