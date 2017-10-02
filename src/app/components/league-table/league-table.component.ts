@@ -1,41 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input, SimpleChange } from '@angular/core';
 
-import { TeamRank } from './../../models/team-rank';
+import { DataService } from './../../services/data.service';
+import { ApiService } from './../../services/api.service';
 
+/**
+ * @name LeagueTableComponent
+ * @description
+ * This component displays the league table of the league selected
+ * The component uses the input property to receive the leagueId
+ * ngOnChanges is used instaed of ngOnInit to reflect the changes from parent component
+ * @param ApiService is used for making API calls.
+ * @param DataService is mid like level layer between the application and the indexedDB of the browser
+ */
 @Component({
-	selector: 'app-league-table',
+	selector: 'app-league-table',		// recognized by this tag in html files
 	templateUrl: './league-table.component.html',
-	styleUrls: ['./league-table.component.scss']
+	// style url is not here because not scoped styling was done for this component
 })
-export class LeagueTableComponent implements OnInit {
-	rankings: TeamRank[] = [];
+export class LeagueTableComponent implements OnChanges {
 
-	constructor() {
-		this.rankings.push({
-			team: {
-				id: 1,
-				name: 'FC Barcelona',
-				code: 'FCB'
-			},
-			rank: 1,
-			points: 20,
-			games: 20,
-			goalDifference: 10
-		});
-		this.rankings.push({
-			team: {
-				id: 2,
-				name: 'Real Madrid',
-				code: 'RMA'
-			},
-			rank: 2,
-			points: 10,
-			games: 20,
-			goalDifference: -3
-		});
-		console.log(this.rankings);
+	@Input() competitionId: number;		// input property for id of the league selected
+	rankings: Array<any> = [];
+
+	constructor(private apiService: ApiService, private dataService: DataService) { }
+
+	// this is used to reflect the changes with the change in the
+	// `competitionId` input property of the component
+	ngOnChanges(changes: {[propKey: string]: SimpleChange}) {
+		if (changes.competitionId && changes.competitionId.currentValue) {
+			this.fetchLeagueTable(changes.competitionId.currentValue);
+		}else {
+			this.fetchLeagueTable(this.dataService.defaultLeagueCompetitionId);
+		}
 	}
 
-	ngOnInit() { }
-
+	// this function takes the league id and returns an observable
+	// with the standing of the passed league id.
+	fetchLeagueTable(compId: number) {
+		this.apiService.getCompetitionTable(compId).subscribe(
+			res => this.rankings = res.standing,
+			err => { console.log(err); }
+		);
+	}
 }

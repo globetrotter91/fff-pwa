@@ -9,15 +9,14 @@
         <th>GD</th>        
       </thead>
       <tbody>
-        <tr ngFor="let pos as rankings">
-          <td>{{pos?.rank}}</td>
-          <td>{{pos?.team.name}}</td>
-          <td>{{pos?.games}}</td>
-          <td>{{pos?.points}}</td>
-          <td>{{pos?.goalDifference}}</td>
+        <tr *ngFor="let pos of rankings">
+          <td>{{ pos.position }}</td>
+          <td>{{ pos.teamName }}</td>
+          <td>{{ pos.playedGames }}</td>
+          <td>{{ pos.points }}</td>
+          <td>{{ pos.goalDifference }}</td>
         </tr>
       </tbody>
     </table>
-		
 	</div>
 </div>

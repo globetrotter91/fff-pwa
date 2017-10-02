@@ -1,6 +1,16 @@
 <div class="row">
-	<div class="col-md-12">
-		<h3>Latest Updates</h3>
-		<app-newslist></app-newslist>
+	<div class="col-xs-12" *ngIf="noLeagueSelected" class="text-center">
+		<h4>FFF === Football Fan's Friend</h4>
+		<p>Now stay up to date with your favorite football leagues</p>
+		<p>View upcoming/finished fixtures and latest standings for your favorite leagues.</p>
+		<p>
+			<a routerLink='/settings' class="btn btn-primary btn-block"> Select League(s)</a>
+		</p>
+	</div>
+	<div class="col-xs-12 text-center" *ngIf="!noLeagueSelected" >
+		<h4>Coming Soon</h4>
+		<p>Customized news feed for selected leagues</p>
+		<a routerLink='/standings' class="btn btn-primary btn-block">Have a look at standings</a>
+		<a routerLink='/fixtures' class="btn btn-primary btn-block">Get ready for upcoming fixtures</a>
 	</div>
 </div>

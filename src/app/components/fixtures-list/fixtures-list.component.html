@@ -1,12 +1,55 @@
 <div class="row">
 	<div class="col-xs-12">
-		<app-fixture-item
-			homeTeam="homeTeam"
-			awayTeam="awayTeam"
-			venue="venue"
-			dateTime="date/time"
-			status="statuses">
-		</app-fixture-item>
-		
+		<ul class="nav nav-tabs">
+			<li [ngClass]="{'active': selectedPane === 'scheduled'}">
+				<a role="tab" (click)="selectedPane = 'scheduled'">Upcoming</a>
+			</li>
+			<li [ngClass]="{'active': selectedPane === 'finished'}">
+				<a role="tab" (click)="selectedPane = 'finished'">Finished</a>
+			</li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane fade" [ngClass]="{'active in': selectedPane === 'finished'}" *ngIf="selectedPane === 'finished'">
+				<ul class="list-group">
+					<li class="list-group-item" *ngFor="let fixture of finishedFixtures">
+						<div class="row">
+							<div class="col-xs-4 text-right">
+								{{ fixture.homeTeamName }}
+							</div>
+							<div class="col-xs-4 text-center">
+								<p class="text-center">{{ fixture.status }}</p>
+								<p class="text-center">{{ fixture.result?.goalsHomeTeam }}:{{ fixture.result?.goalsAwayTeam }}</p>
+							</div>
+							<div class="col-xs-4">
+								{{ fixture.awayTeamName }}
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="tab-pane fade active in" [ngClass]="{'active in': selectedPane === 'scheduled'}" *ngIf="selectedPane === 'scheduled'">
+				<ul class="list-group">
+					<li class="list-group-item" *ngFor="let fixture of scheduledfixtures">
+						<div class="row">
+							<div class="col-xs-4 text-right">
+								{{ fixture.homeTeamName }}
+							</div>
+							<div class="col-xs-4 text-center">
+								<p class="text-center">{{ fixture.status }}</p>
+								<p class="text-center" *ngIf="fixture.status === 'IN_PLAY'">{{ fixture.result?.goalsHomeTeam }}:{{ fixture.result?.goalsAwayTeam }}</p>
+								<p class="text-center" *ngIf="fixture.status === 'SCHEDULED'">{{ fixture.date | date:'d/M/yy'}}</p>
+								<p class="text-center" *ngIf="fixture.status === 'TIMED'">{{ fixture.date | date:'d/M/yy HH:mm'}}</p>
+							</div>
+							<div class="col-xs-4">
+								{{ fixture.awayTeamName }}
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+
+
 	</div>
 </div>

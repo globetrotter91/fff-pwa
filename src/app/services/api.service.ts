@@ -2,10 +2,23 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 
+/**
+ * @name ApiService
+ * @description
+ * This Service is used for making api calls to `api.football-data.org`
+ * @param Http injectable provided by angular for making http calls
+ */
 @Injectable()
 export class ApiService {
+	// this will go in env variables
+	private API_BASE_URL: string;
 
-	constructor(private http: Http) { }
+	constructor(private http: Http) {
+		this.API_BASE_URL = 'http://api.football-data.org/v1';
+	}
+
+	// The api requires auth token in the header for CORS prevention
+	// This method is used to set the headers for a request and is used for every api call
 	private getHeaders(): RequestOptions {
 		const headers = new Headers({
 			'X-Response-Control': 'full',
@@ -14,55 +27,34 @@ export class ApiService {
 		return new RequestOptions({ headers: headers });
 	}
 
+	// gets the lists of league
 	public getCompetitionsList() {
-		const url = `http://api.football-data.org/v1/competitions`;
-		console.log(url);
+		const url = `${this.API_BASE_URL}/competitions`;
 		return this.http.get(url, this.getHeaders()).map((response: Response) => response.json());
 	}
 
+	// gets the lists of teams in a league based on the leagueId provided
 	public getCompetitionTeams(competitionId: number) {
-		// 	http://api.football-data.org/v1/competitions/${leagueId}/teams
+		const url = `${this.API_BASE_URL}/competitions/${competitionId}/teams`;
+		return this.http.get(url, this.getHeaders()).map((response: Response) => response.json());
 	}
 
+	// gets the league table of a league based on the leagueId provided
 	public getCompetitionTable(competitionId: number) {
-		 const url = `http://api.football-data.org/v1/competitions/${competitionId}/leagueTable`;
-		 console.log(url);
+		 const url = `${this.API_BASE_URL}/competitions/${competitionId}/leagueTable`;
 		 return this.http.get(url, this.getHeaders()).map((response: Response) => response.json());
 	}
 
+	// gets the fixtures of a league based on the leagueId provided
 	public getCompetitionFixtures(competitionId: number) {
-		// 	http://api.football-data.org/v1/competitions/${leagueId}/fixtures
-	}
-
-	public getFixturesForLeague(leagueCodes: string, timeFrame?: string) {
-		const url = `http://api.football-data.org/v1/fixtures?league=${leagueCodes}`;
-		console.log(url);
+		const url = `${this.API_BASE_URL}/competitions/${competitionId}/fixtures`;
 		return this.http.get(url, this.getHeaders()).map((response: Response) => response.json());
 	}
 
-	public getFixture(fixtureId: number) {
-		// 	http://api.football-data.org/v1/fixtures/${fixtureId}
-		/**
-		 * filter by
-		 *  matchday
-		 */
-	}
-
-	public getTeamFixtures(teamId: number) {
-		// 	http://api.football-data.org/v1/teams/${teamId}/fixtures
-		/**
-		 * filter by
-		 *  season=/\d\d\d\d/
-			timeFrame=/p|n[1-9]{1,2}/
-			venue=/home|away/
-		 */
-	}
-
-	public getTeam(teamId: number) {
-		// 	http://api.football-data.org/v1/teams/${teamId}
-	}
-
-	public getTeamPlayers(teamId: number) {
-		// 	http://api.football-data.org/v1/teams/${teamId}/players
+	// still working onm this
+	// this fetches fixtures for multiple leagues with timeFrame filter
+	public getFixturesForLeague(leagueCodes: string, timeFrame?: string) {
+		const url = `${this.API_BASE_URL}/fixtures?league=${leagueCodes}`;
+		return this.http.get(url, this.getHeaders()).map((response: Response) => response.json());
 	}
 }

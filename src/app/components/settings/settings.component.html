@@ -10,7 +10,11 @@
 	</div>
 	<div class="col-md-12">
 		<ul class="list-group">
-			<li class="list-group-item" *ngFor="let league of leaguesToDisplay" (click)="leagueSelected(league)">
+			<li
+				class="list-group-item"
+				*ngFor="let league of leaguesToDisplay"
+				(click)="leagueSelected(league)"
+			>
 				<span class="badge" *ngIf="league.isSelected"><i class="fa fa-check"></i></span>
 				{{ league.leagueName }}
 			</li>

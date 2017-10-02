@@ -1,15 +1,29 @@
 import { Component, OnInit } from '@angular/core';
 
+/**
+ * @name HomeComponent
+ * @description
+ * This is the home page of the application
+ * This will soon have api driven news for selected leagues.
+ */
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+	templateUrl: './home.component.html',
+	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
-  constructor() { }
+	noLeagueSelected: boolean;
 
-  ngOnInit() {
-  }
+	constructor() {
+		this.noLeagueSelected = false;
+	}
+
+	ngOnInit() {
+		// the selected leagues by the user are save in local storage as string.
+		const selectedLeagues: string = localStorage.getItem('selectedLeagues');
+		if (!selectedLeagues) {
+			this.noLeagueSelected = true;
+		}
+	}
 
 }

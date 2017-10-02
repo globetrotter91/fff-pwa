@@ -1,5 +1,5 @@
 export interface Team {
-    id: number;
+    teamId: number;
     name: string;
     shortName?: string;
     code: string;
