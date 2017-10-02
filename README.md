@@ -3,6 +3,7 @@ This app uses the http://api.football-data.org/ API to show the show the fixture
 
 The user can select one or more leagues and then further chose to see fixtures/standing of a particular league.
 
+The offline feature will be available soon.
 
 # UI LIBRARY
 https://bootswatch.com/yeti/
@@ -47,7 +48,7 @@ This is based on Bootstrap
 ## TODO
     0. Complete the home page with custom news feed.
 
-    1. Implement the service worker.
+    1. Implement the service worker. Offline and add to home screen feature.
 
     2. Create more strong types for variables used.
     
